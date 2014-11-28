@@ -1,4 +1,4 @@
-android
+Android
 =======
 
-Android application development
+Learn Android application development
