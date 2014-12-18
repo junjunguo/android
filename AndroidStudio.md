@@ -4,7 +4,7 @@ Android Studio
 - official IDE for Android application development
 - based on IntelliJ IDEA
 - Android Studio offers:
-    - flexible Gradle based build system
+    - flexible [Gradle][Gradle] based [build system][Build Process]
     - build variants and multiple apk file generation
     - code templates
     - layout editor
@@ -31,3 +31,22 @@ ADK is a reference implementtation for hardware manufacturers and hobbyists to u
 Android NDK
 --
 The NDK is a toolset that allows you to implement parts of your app using native-code languages such as C and C++ ....
+
+topic
+--
+[Android Studio](AndroidStudio.md)
+
+[Android Build Process](buildprocess.md)
+
+[Developer Workflow](DeveloperWorkflow.md)
+
+[Android System Architechture](androidSystemArchitechture.md)
+
+[Gradle](Gradle.md)
+
+[Design](design.md)
+
+
+
+[Gradle]: Gradle.md
+[Build Process]: buildprocess.md
