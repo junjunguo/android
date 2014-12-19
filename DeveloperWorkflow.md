@@ -2,6 +2,8 @@ Developer Workflow
 ==
 
 
+![app workflow](files/developing_overview.png)
+
 
 topic
 --
