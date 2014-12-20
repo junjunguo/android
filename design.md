@@ -9,6 +9,13 @@ User Experience design
 - User experience design encompasses traditional human–computer interaction (HCI) design, and extends it by addressing all aspects of a product or service as perceived by users.
 -  User experience is any aspect of a person's interaction with a given IT system, including the interface, graphics, industrial design, physical interaction, and the manual.
 
+
+Responsive design
+--
+Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience—easy reading and navigation with a minimum of resizing, panning, and scrolling—across a wide range of devices (from desktop computer monitors to mobile phones)
+
+
+
 topic
 --
 [Android Studio](AndroidStudio.md)
