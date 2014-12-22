@@ -92,9 +92,9 @@ public class OpenWeather {
         }
     }
 
-    public static void main(String[] args) {
-        String s = getWeather("Trondheim");
-        System.out.println(s);
-    }
+//    public static void main(String[] args) {
+//        String s = getWeather("Trondheim");
+//        System.out.println(s);
+//    }
 }
 

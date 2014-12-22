@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -14,11 +15,10 @@ public class WeatherDataParser {
 
     /**
      * Given a string of the form returned by the api call: http://api.openweathermap.org/data/2 *
-     * .5/forecast/daily?q=94043&mode=json&units=metric&cnt=7 retrieve the maximum temperature for
-     * the day indicated by dayIndex (Note: 0-indexed, so 0 would refer to the first day).
+     * .5/forecast/daily?q=94043&mode=json&units=metric&cnt=7 retrieve the maximum temperature for the day indicated by
+     * dayIndex (Note: 0-indexed, so 0 would refer to the first day).
      */
-    public static double getMaxTemperatureForDay(String weatherJsonStr, int dayIndex)
-            throws JSONException {
+    public static double getMaxTemperatureForDay(String weatherJsonStr, int dayIndex) throws JSONException {
         JSONObject weather = new JSONObject(weatherJsonStr);
         JSONArray ja = weather.getJSONArray("list");
         JSONObject jo = (JSONObject) ja.get(dayIndex);
@@ -50,14 +50,12 @@ public class WeatherDataParser {
     }
 
     /**
-     * Take the String representing the complete forecast in JSON Format and pull out the data we
-     * need to construct the Strings needed for the wireframes.
+     * Take the String representing the complete forecast in JSON Format and pull out the data we need to construct the
+     * Strings needed for the wireframes.
      * <p/>
-     * Fortunately parsing is easy:  constructor takes the JSON string and converts it into an
-     * Object hierarchy for us.
+     * Fortunately parsing is easy:  constructor takes the JSON string and converts it into an Object hierarchy for us.
      */
-    private String[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
-            throws JSONException {
+    private String[] getWeatherDataFromJson(String forecastJsonStr, int numDays) throws JSONException {
 
         // These are the names of the JSON objects that need to be extracted.
         final String OWM_LIST = "list";
@@ -102,5 +100,63 @@ public class WeatherDataParser {
         }
 
         return resultStrs;
+    }
+
+    /**
+     * 
+     * @param weatherJsonStr
+     * @return
+     */
+    public static ArrayList<String> getWeekForecast(String weatherJsonStr) {
+        ArrayList warray = new ArrayList();
+        try {
+            JSONObject weather = new JSONObject(weatherJsonStr);
+            JSONArray jarray = weather.getJSONArray("list");
+            for (int i = 0; i < jarray.length(); i++) {
+                String ws = "";
+                JSONObject li = (JSONObject) jarray.get(i);
+                JSONObject temp = li.getJSONObject("temp");
+                ws += "Temp: Day " + temp.get("day") + "; Night: " + temp.get("eve") +
+                        "; " +
+                        "Morning: " + temp.get("morn") + "; Min: " +
+                        "" + temp.get("min") + "; max: " + temp.get("max") + "\n";
+                ws += "Pressure: " + li.get("pressure").toString() + "; humidity: " + li.get("humidity").toString() +
+                        "\n";
+                JSONObject w = li.getJSONArray("weather").getJSONObject(0);
+                ws += "Weather: " + w.get("main") + "; description: " + w.get("description");
+                warray.add(i, ws);
+            }
+        } catch (JSONException e) {
+            System.out.println("catch Json: " + e);
+        } finally {
+            return warray;
+        }
+    }
+
+    public static String [] getWeekForecastL(String weatherJsonStr) {
+        String [] warray = null;
+        try {
+            JSONObject weather = new JSONObject(weatherJsonStr);
+            JSONArray jarray = weather.getJSONArray("list");
+            warray = new String[jarray.length()];
+            for (int i = 0; i < jarray.length(); i++) {
+                String ws = "";
+                JSONObject li = (JSONObject) jarray.get(i);
+                JSONObject temp = li.getJSONObject("temp");
+                ws += "Temp: Day " + temp.get("day") + "; Night: " + temp.get("eve") +
+                        "; " +
+                        "Morning: " + temp.get("morn") + "; Min: " +
+                        "" + temp.get("min") + "; max: " + temp.get("max") + "\n";
+                ws += "Pressure: " + li.get("pressure").toString() + "; humidity: " + li.get("humidity").toString() +
+                        "\n";
+                JSONObject w = li.getJSONArray("weather").getJSONObject(0);
+                ws += "Weather: " + w.get("main") + "; description: " + w.get("description");
+                warray[i]= ws;
+            }
+        } catch (JSONException e) {
+            System.out.println("catch Json: " + e);
+        } finally {
+            return warray;
+        }
     }
 }

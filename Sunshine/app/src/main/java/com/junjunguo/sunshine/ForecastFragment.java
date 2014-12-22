@@ -25,15 +25,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * A placeholder fragment containing a simple view. 1<p/> a fragment is a modular container with
- * activity
+ * A placeholder fragment containing a simple view. 1<p/> a fragment is a modular container with activity
  * <p/>
  * fragment_main: res/layout/fragment_main.xml
  */
 public class ForecastFragment extends Fragment {
+    public ArrayAdapter<String> mForecastAdapter;
+    // Will contain the raw JSON response as a string.
+    private String forecastJsonStr = null;
 
     public ForecastFragment() {
     }
@@ -62,18 +63,17 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
-        List<String> alist = new ArrayList<>();
-        alist.add("Today - Sunny - 88/63");
-        alist.add("Tomorrow - Sunny - 88/63");
-        alist.add("Weds - Sunny - 88/63");
-        alist.add("Thurs - Sunny - 88/63");
-        alist.add("Fri - Sunny - 88/63");
-        alist.add("Sat - Sunny - 88/63");
-        //        alist.add(FetchWeatherTask01.getWeather("Trondheim"));
+        Log.i("forecastJsonStr ", forecastJsonStr);
+        ArrayList<String> weekForecast = //new ArrayList(WeatherDataParser.getWeekForecast(forecastJsonStr));
+                        new ArrayList<>();
+                weekForecast.add("Today - Sunny - 88/63");
+                weekForecast.add("Tomorrow - Sunny - 88/63");
+                weekForecast.add("Weds - Sunny - 88/63");
+                weekForecast.add("Thurs - Sunny - 88/63");
+                weekForecast.add("Fri - Sunny - 88/63");
+                weekForecast.add("Sat - Sunny - 88/63");
             /*
              *  ArrayAdapter<String> :
              *  Parameters:
@@ -84,7 +84,8 @@ public class ForecastFragment extends Fragment {
              *      ID of text view
              *      list of data
              */
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+        //        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+        mForecastAdapter = new ArrayAdapter<String>(
                 // the current context
                 getActivity(),
                 // id of list item layout
@@ -92,21 +93,22 @@ public class ForecastFragment extends Fragment {
                 // id of the textview to populate
                 R.id.list_item_forecast_textview,
                 // data
-                alist);
+                weekForecast);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         // get a reference to the ListView, and attach this adapter to listview
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
-        listView.setAdapter(arrayAdapter);
+        listView.setAdapter(mForecastAdapter);
 
         return rootView;
     }
 
-    public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
+
+    public class FetchWeatherTask extends AsyncTask<String, Void, ArrayList<String>> {
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected ArrayList<String> doInBackground(String... params) {
             if (params.length == 0) {
                 return null;
             }
@@ -127,16 +129,13 @@ public class ForecastFragment extends Fragment {
                 // http://openweathermap.org/API#forecast
                 //                URL url = new URL("http://api.openweathermap.org/data/2
                 // .5/forecast/daily?q=" + "Trondheim" + "&mode=json&units=metric&cnt=7");
-                final String forecastBaseUrl =
-                        "http://api.openweathermap.org/data/2.5/forecast/daily?";
+                final String forecastBaseUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?";
                 final String queryParam = "q";
                 final String formatParam = "mode";
                 final String unitsParam = "units";
                 final String daysParam = "cnt";
-                Uri builtUri = Uri.parse(forecastBaseUrl).buildUpon()
-                        .appendQueryParameter(queryParam, params[0])
-                        .appendQueryParameter(formatParam, format)
-                        .appendQueryParameter(unitsParam, units)
+                Uri builtUri = Uri.parse(forecastBaseUrl).buildUpon().appendQueryParameter(queryParam, params[0])
+                        .appendQueryParameter(formatParam, format).appendQueryParameter(unitsParam, units)
                         .appendQueryParameter(daysParam, Integer.toString(numDays)).build();
                 // Create the request to OpenWeatherMap, and open the connection
                 //                urlConnection = (HttpURLConnection) url.openConnection();
@@ -171,7 +170,7 @@ public class ForecastFragment extends Fragment {
                 Log.v(LOG_TAG, "Forecast JSON String: " + forecastJsonStr);
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, 
+                // If the code didn't successfully get the weather data,
                 // there's no point in attemping
                 // to parse it.
                 forecastJsonStr = null;
@@ -187,7 +186,17 @@ public class ForecastFragment extends Fragment {
                     }
                 }
             }
-            return null;
+            return WeatherDataParser.getWeekForecast(forecastJsonStr);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> result) {
+            if (result != null) {
+                mForecastAdapter.clear();
+            }
+            for (String dayForecastStr : result) {
+                mForecastAdapter.add(dayForecastStr);
+            }
         }
     }
 }
