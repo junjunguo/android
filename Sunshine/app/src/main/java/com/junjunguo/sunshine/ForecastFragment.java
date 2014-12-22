@@ -4,11 +4,15 @@ package com.junjunguo.sunshine;
  * Created by GuoJunjun on 20.12.14.
  */
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -24,9 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A placeholder fragment containing a simple view.
- * 1<p/>
- * a fragment is a modular container with activity
+ * A placeholder fragment containing a simple view. 1<p/> a fragment is a modular container with
+ * activity
  * <p/>
  * fragment_main: res/layout/fragment_main.xml
  */
@@ -36,9 +39,32 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.forecastfragment, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_refresh) {
+            FetchWeatherTask weatherTask = new FetchWeatherTask();
+            weatherTask.execute("Trondheim");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
 
         List<String> alist = new ArrayList<>();
         alist.add("Today - Sunny - 88/63");
@@ -47,7 +73,7 @@ public class ForecastFragment extends Fragment {
         alist.add("Thurs - Sunny - 88/63");
         alist.add("Fri - Sunny - 88/63");
         alist.add("Sat - Sunny - 88/63");
-//        alist.add(FetchWeatherTask01.getWeather("Trondheim"));
+        //        alist.add(FetchWeatherTask01.getWeather("Trondheim"));
             /*
              *  ArrayAdapter<String> :
              *  Parameters:
@@ -67,6 +93,8 @@ public class ForecastFragment extends Fragment {
                 R.id.list_item_forecast_textview,
                 // data
                 alist);
+
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         // get a reference to the ListView, and attach this adapter to listview
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(arrayAdapter);
@@ -74,12 +102,14 @@ public class ForecastFragment extends Fragment {
         return rootView;
     }
 
-    public class FetchWeatherTask extends AsyncTask<Void, Void, Void> {
+    public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
         @Override
-        protected Void doInBackground(Void... params) {
-
+        protected Void doInBackground(String... params) {
+            if (params.length == 0) {
+                return null;
+            }
             // These two need to be declared outside the try/catch
             // so that they can be closed in the finally block.
             HttpURLConnection urlConnection = null;
@@ -87,24 +117,39 @@ public class ForecastFragment extends Fragment {
 
             // Will contain the raw JSON response as a string.
             String forecastJsonStr = null;
+            String format = "json";
+            String units = "metric";
+            int numDays = 7;
 
             try {
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are avaiable at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
-                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=" + "Trondheim" + "&mode=json&units=metric&cnt=7");
-
+                //                URL url = new URL("http://api.openweathermap.org/data/2
+                // .5/forecast/daily?q=" + "Trondheim" + "&mode=json&units=metric&cnt=7");
+                final String forecastBaseUrl =
+                        "http://api.openweathermap.org/data/2.5/forecast/daily?";
+                final String queryParam = "q";
+                final String formatParam = "mode";
+                final String unitsParam = "units";
+                final String daysParam = "cnt";
+                Uri builtUri = Uri.parse(forecastBaseUrl).buildUpon()
+                        .appendQueryParameter(queryParam, params[0])
+                        .appendQueryParameter(formatParam, format)
+                        .appendQueryParameter(unitsParam, units)
+                        .appendQueryParameter(daysParam, Integer.toString(numDays)).build();
                 // Create the request to OpenWeatherMap, and open the connection
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
+                //                urlConnection = (HttpURLConnection) url.openConnection();
+                //                urlConnection.setRequestMethod("GET");
+                //                urlConnection.connect();
+                URL url = new URL(builtUri.toString());
+                Log.v(LOG_TAG, "Built URI " + builtUri.toString());
                 // Read the input stream into a String
                 InputStream inputStream = urlConnection.getInputStream();
                 StringBuffer buffer = new StringBuffer();
                 if (inputStream == null) {
                     // Nothing to do.
-//                forecastJsonStr = null;
+                    //                forecastJsonStr = null;
                     return null;
                 }
                 reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -119,13 +164,15 @@ public class ForecastFragment extends Fragment {
 
                 if (buffer.length() == 0) {
                     // Stream was empty.  No point in parsing.
-//                forecastJsonStr = null;
+                    //                forecastJsonStr = null;
                     return null;
                 }
                 forecastJsonStr = buffer.toString();
+                Log.v(LOG_TAG, "Forecast JSON String: " + forecastJsonStr);
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
+                // If the code didn't successfully get the weather data, 
+                // there's no point in attemping
                 // to parse it.
                 forecastJsonStr = null;
             } finally {
