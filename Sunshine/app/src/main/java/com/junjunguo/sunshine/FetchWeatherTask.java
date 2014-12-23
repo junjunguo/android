@@ -16,14 +16,17 @@ import java.util.ArrayList;
 /**
  * Created by GuoJunjun on 22.12.14.
  */
-public class FetchWeatherTask extends AsyncTask<String, ArrayAdapter<String>, ArrayList<String>> {
+public class FetchWeatherTask extends AsyncTask<ObjectHolder, Void, ArrayList<String>> {
+    //AsyncTask<Params, Progress, Result> execute (Params... params)
     private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
+    private ArrayAdapter<String> mForecastAdapter;
 
     @Override
-    protected ArrayList<String > doInBackground(String... params) {
+    protected ArrayList<String> doInBackground(ObjectHolder... params) {
         if (params.length == 0) {
             return null;
         }
+        mForecastAdapter = (ArrayAdapter) params[0].getSecond();
         // These two need to be declared outside the try/catch
         // so that they can be closed in the finally block.
         HttpURLConnection urlConnection = null;
@@ -46,7 +49,8 @@ public class FetchWeatherTask extends AsyncTask<String, ArrayAdapter<String>, Ar
             final String formatParam = "mode";
             final String unitsParam = "units";
             final String daysParam = "cnt";
-            Uri builtUri = Uri.parse(forecastBaseUrl).buildUpon().appendQueryParameter(queryParam, params[0])
+            Uri builtUri = Uri.parse(forecastBaseUrl).buildUpon()
+                    .appendQueryParameter(queryParam, (String) params[0].getFirst())
                     .appendQueryParameter(formatParam, format).appendQueryParameter(unitsParam, units)
                     .appendQueryParameter(daysParam, Integer.toString(numDays)).build();
             // Create the request to OpenWeatherMap, and open the connection
@@ -101,14 +105,14 @@ public class FetchWeatherTask extends AsyncTask<String, ArrayAdapter<String>, Ar
         return WeatherDataParser.getWeekForecast(forecastJsonStr);
     }
 
-//    @Override
-//    protected void onPostExecute(ArrayList<String> result) {
-//        if (result != null) {
-//            mForecastAdapter.clear();
-//        }
-//        for (String dayForecastStr : result) {
-//            mForecastAdapter.add(dayForecastStr);
-//        }
-//    }
+    @Override
+    protected void onPostExecute(ArrayList<String> result) {
+        if (result != null) {
+            mForecastAdapter.clear();
+        }
+        for (String dayForecastStr : result) {
+            mForecastAdapter.add(dayForecastStr);
+        }
+    }
 
 }

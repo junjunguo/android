@@ -4,18 +4,24 @@ package com.junjunguo.sunshine;
  * Created by GuoJunjun on 20.12.14.
  */
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A placeholder fragment containing a simple view. 1<p/> a fragment is a modular container with activity
@@ -23,7 +29,9 @@ import java.util.ArrayList;
  * fragment_main: res/layout/fragment_main.xml
  */
 public class ForecastFragment extends Fragment {
+    private final String LOG_TAG = ForecastFragment.class.getSimpleName();
     private ArrayAdapter<String> mForecastAdapter;
+
     // Will contain the raw JSON response as a string.
     //    private String forecastJsonStr = null;
     private ArrayList<String> weekForecast;
@@ -47,13 +55,33 @@ public class ForecastFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            FetchWeatherTask weatherTask = new FetchWeatherTask();
-            weatherTask.execute("Trondheim");
-            weekForecast = weatherTask.doInBackground();
-//            mForecastAdapter = weatherTask.onPostExecute();
+            updateWeather();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override public void onStart() {
+        super.onStart();
+        updateWeather();
+    }
+
+    private void updateWeather() {
+        FetchWeatherTask weatherTask = new FetchWeatherTask();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location =
+                prefs.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+
+
+        weatherTask.execute(new ObjectHolder(location, mForecastAdapter));
+        try {
+            weekForecast = weatherTask.get();
+            System.out.println(weatherTask);
+        } catch (InterruptedException e) {
+            Log.e(LOG_TAG, "Interrupted weather.get", e);
+        } catch (ExecutionException e) {
+            Log.e(LOG_TAG, "Execution weather.get", e);
+        }
     }
 
     @Override
@@ -87,7 +115,15 @@ public class ForecastFragment extends Fragment {
         // get a reference to the ListView, and attach this adapter to listview
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            @Override public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String forecast = mForecastAdapter.getItem(position);
+                Intent intent = new Intent(getActivity(), DetailActivity.class).putExtra(Intent.EXTRA_TEXT, forecast);
+                startActivity(intent);
+                //                Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
+            }
+        });
         return rootView;
     }
 
