@@ -4,6 +4,16 @@ source: [Developing Android Apps - Udacity](https://www.udacity.com/course/ud853
 - Course provide by [Udacity](https://www.udacity.com/)
 - Course build by Google.
 
+SQLite
+--
+[Command Line Shell For SQLite](http://www.sqlite.org/cli.html)
+
+[Datatypes in SQLite Version 3](http://www.sqlite.org/datatype3.html)
+
+Git
+--
+[Git](git.md)
+
 Android 
 --
 Android is a full software stack
