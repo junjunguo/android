@@ -49,3 +49,7 @@ an activity represents a single screen with a user interface.
         - usually to ContentProvider holding the data
 
 ![activities life cycle](files/activity_lifecycle.png)
+
+Lifecycle
+--
+![life cycle](files/basic-lifecycle.png)
