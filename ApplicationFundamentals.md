@@ -53,3 +53,22 @@ an activity represents a single screen with a user interface.
 Lifecycle
 --
 ![life cycle](files/basic-lifecycle.png)
+
+
+[Activity](http://developer.android.com/reference/android/app/Activity.html)
+--
+- the Activity class takes care of creating a window, in which UI can placed with **setContentView(View).
+    - activities are often full-screen windows
+    - can used as floating windows **windowIsFloating** set
+    - embedded inside of another activity **ActivityGroup**
+- most subcalsses of Activity implement:
+    - **onCreate(Bundle)** initialize activity
+        - here will usually call **setContenView(int)** with a layout resource defining UI
+        - and using **findViewById(int)** to retrieve the widgets. 
+    - **onPause()** deal with the user leaving activity
+        - any changes made by the user shold at this point be committed (usually to **ContentProvider** holding the data).
+
+
+To be of use with Context.startActivity(), all activity classes must have a corresponding <activity> declaration in their package's AndroidManifest.xml.
+
+

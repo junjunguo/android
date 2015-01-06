@@ -1,9 +1,9 @@
 Android
 =======
 
-Learn Android application development
+Android application development
 
-topic
+Topics A:
 --
 [Android Studio](AndroidStudio.md)
 
@@ -13,11 +13,16 @@ topic
 
 [Android System Architechture](androidSystemArchitechture.md)
 
+[Android Fundamental](Sunshine/README.md)
+
+
+Topics B:
+--
 [Gradle](Gradle.md)
 
 [Design](design.md)
 
---
 [Git](Sunshine/git.md)
+
 [SQLite](Sunshine/sqlite/README.md)
-[Android Fundamental](Sunshine/README.md)
+
