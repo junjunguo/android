@@ -13,6 +13,8 @@ Topics A:
 
 [Android System Architechture](androidSystemArchitechture.md)
 
+[Android Application fundamentals](ApplicationFundamentals.md)
+
 [Android Fundamental](Sunshine/README.md)
 
 
