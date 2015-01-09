@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">测试布局</string>
+    <string name="hello_world">你好!</string>
+    <string name="action_settings">设置</string>
+    <string name="users_name_edit_text">名字</string>
+    <string name="how_are_you_doing">你好吗 ?</string>
+    <string name="answer_no_button">是</string>
+    <string name="answer_yes_button">不是</string>
+
+</resources>
