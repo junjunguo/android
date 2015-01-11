@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+           android:layout_width="24dp"
+           android:layout_height="24dp"
+           android:layout_marginLeft="10dp"
+           android:layout_marginTop="25dp"
+           android:src="@drawable/dot"
+           android:id="@+id/image_view1">
+
+</ImageView>
