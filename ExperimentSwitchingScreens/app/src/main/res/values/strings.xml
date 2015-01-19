@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExperimentSwitchingScreens</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="enter_your_name">Enter you name</string>
+    <string name="enter_name_button">Enter</string>
+    <string name="the_calling_activity_message">The calling activity message</string>
+    <string name="go_get_the_name">Go get the name</string>
+    <string name="users_name_was">The users name was</string>
+
+</resources>
