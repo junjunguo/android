@@ -72,5 +72,21 @@
         android:layout_below="@+id/ay_axis"
         android:layout_marginTop="50dp"
         android:id="@+id/angle"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="angle"
+        android:layout_below="@+id/angle"
+        android:layout_marginTop="30dp"
+        android:id="@+id/anglexz"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="angle"
+        android:layout_below="@+id/anglexz"
+        android:layout_marginTop="30dp"
+        android:id="@+id/angleyz"/>
 
 </RelativeLayout>
