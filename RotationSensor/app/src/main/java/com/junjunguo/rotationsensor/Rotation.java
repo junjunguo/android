@@ -14,18 +14,18 @@ import android.widget.TextView;
 
 public class Rotation extends ActionBarActivity implements SensorEventListener {
     private SensorManager mSensorManager;
-    //    private Sensor mSensorRotation;
     private Sensor mSensorAccelerator;
+    //    private Sensor mSensorRotation;
 //    private final float NOISE = (float) 0.1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rotation);
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         //        mSensorRotation = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-        mSensorAccelerator = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         //        mSensorManager.registerListener(this, mSensorRotation, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mSensorAccelerator = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorManager.registerListener(this, mSensorAccelerator, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
