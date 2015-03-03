@@ -15,20 +15,20 @@ public class MainActivity2 extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity2);
 
-
-
     }
 
-    @Override protected void onResume() {
-        super.onResume();
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main_activity2, menu);
         return true;
+    }
+    private int points = 0;
+    @Override public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem score = menu.findItem(R.id.status_button);
+        score.setTitle(String.valueOf(points));
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -39,12 +39,18 @@ public class MainActivity2 extends ActionBarActivity {
                 startActivity(new Intent(this, MainActivity.class));
                 return true;
             case R.id.action_activity2:
-                Toast.makeText(this,"item selected! move to activity 2", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "item selected! move to activity 2", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, MainActivity2.class));
                 return true;
+            case R.id.status_button:
+                Toast.makeText(this, "status bar clicked!", Toast.LENGTH_SHORT).show();
+                points++;
+                invalidateOptionsMenu();
             default:
-                Toast.makeText(this,"item selected! default", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "item selected! default", Toast.LENGTH_SHORT).show();
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }

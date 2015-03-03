@@ -8,5 +8,6 @@
     <string name="user_id">user id</string>
     <string name="my_app">My APP</string>
     <string name="user_password">user password</string>
+    <string name="accessibility_overflow">Accessibility Overflow</string>
 
 </resources>
