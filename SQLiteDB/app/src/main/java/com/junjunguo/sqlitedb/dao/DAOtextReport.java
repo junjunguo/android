@@ -16,14 +16,13 @@ import java.util.List;
  * <p/>
  * Created by GuoJunjun <junjunguo.com> on 06/03/15.
  * <p/>
- * Responsible for this file: GuoJunjun
  */
 public class DAOtextReport {
     private SQLiteDatabase database;
-    private MySQLiteHelper dbHelper;
+    private DBhelper dbHelper;
 
     public DAOtextReport(Context context) {
-        dbHelper = new MySQLiteHelper(context);
+        dbHelper = new DBhelper(context);
         // Gets the data repository in write mode
         database = dbHelper.getWritableDatabase();
     }
@@ -39,27 +38,48 @@ public class DAOtextReport {
      * insert a text report item to the textreport database table
      *
      * @param textReport
+     * @return the row ID of the newly inserted row, or -1 if an error occurred
      */
-    public void addReport(TextReport textReport) {
+    public long addReport(TextReport textReport) {
         // Create a new map of values, where column names are the keys
         ContentValues cv = new ContentValues();
-        cv.put(MyTables.TextReport.COLUMN_NUSER_ID, textReport.getUserid());
-        cv.put(MyTables.TextReport.COLUMN_REPORT, textReport.getReport());
-        cv.put(MyTables.TextReport.COLUMN_ISREPOETED, textReport.isIsreported());
-        cv.put(MyTables.TextReport.COLUMN_LONGITUDE, textReport.getLongitude());
-        cv.put(MyTables.TextReport.COLUMN_LATITUDE, textReport.getLatitude());
-        cv.put(MyTables.TextReport.COLUMN_DATETIME, MyTables.getSimpleDateFormat().format(textReport.getDatetime()));
+        cv.put(DBtables.TextReport.COLUMN_NUSER_ID, textReport.getUserid());
+        cv.put(DBtables.TextReport.COLUMN_REPORT, textReport.getReport());
+        cv.put(DBtables.TextReport.COLUMN_ISREPOETED, textReport.isIsreported());
+        cv.put(DBtables.TextReport.COLUMN_LONGITUDE, textReport.getLongitude());
+        cv.put(DBtables.TextReport.COLUMN_LATITUDE, textReport.getLatitude());
+        cv.put(DBtables.TextReport.COLUMN_DATETIME, System.currentTimeMillis());
 
         // Insert the new row, returning the primary key value of the new row
-        database.insert(MyTables.TextReport.TABLE_NAME, null, cv);
+        return database.insert(DBtables.TextReport.TABLE_NAME, null, cv);
     }
 
+    /**
+     * update given text reports isReported value
+     *
+     * @param textReport
+     * @return the number of rows affected
+     */
+    public long updateIsReported(TextReport textReport) {
+        ContentValues cv = new ContentValues();
+        cv.put(DBtables.TextReport.COLUMN_ISREPOETED, textReport.isIsreported());
+
+        String where = DBtables.TextReport.COLUMN_NUSER_ID + "=" + textReport.getUserid() + "AND" +
+                DBtables.TextReport.COLUMN_REPORT + "=" + textReport.getReport() + "AND" +
+                DBtables.TextReport.COLUMN_DATETIME + "=" +
+                textReport.getDatetime().getTimeInMillis();
+        return database.update(DBtables.TextReport.TABLE_NAME, cv, where, null);
+    }
+
+    /**
+     * @return all text reports as a List
+     */
     public List<TextReport> getAllTextReports() {
         List<TextReport> textReports = new ArrayList<>();
 
         Cursor cursor =
-                database.query(MyTables.TextReport.TABLE_NAME, MyTables.TextReport.ALL_COLUMNS, null, null, null, null,
-                        null);
+                database.query(DBtables.TextReport.TABLE_NAME, DBtables.TextReport.ALL_COLUMNS, null, null, null, null,
+                        DBtables.TextReport.COLUMN_DATETIME + " DESC");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -72,16 +92,34 @@ public class DAOtextReport {
         return textReports;
     }
 
-    private TextReport cursorToTextReport(Cursor cursor) {
-        TextReport textReport = new TextReport();
-        
-        textReport.setUserid(cursor.getString(cursor.getColumnIndex(MyTables.TextReport.COLUMN_NUSER_ID)));
-        textReport.setReport(cursor.getString(cursor.getColumnIndex(MyTables.TextReport.COLUMN_REPORT)));
-        textReport.setDatetime(MyTables.getDateTime(cursor.getString(cursor.getColumnIndex(MyTables.TextReport.COLUMN_DATETIME))));
-        textReport.setLongitude(cursor.getDouble(cursor.getColumnIndex(MyTables.TextReport.COLUMN_LONGITUDE)));
-        textReport.setLatitude(cursor.getDouble(cursor.getColumnIndex(MyTables.TextReport.COLUMN_LATITUDE)));
-        textReport.setIsreported(cursor.get);
-        return textReport;
+
+    /**
+     * @return total row count of the table
+     */
+    public int getRowCount() {
+        String countQuery = "SELECT  * FROM " + DBtables.TextReport.TABLE_NAME;
+        Cursor cursor = database.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
     }
 
+    /**
+     * *
+     *
+     * @param cursor the cursor row
+     * @return a TextReport
+     */
+    private TextReport cursorToTextReport(Cursor cursor) {
+        TextReport tr = new TextReport();
+
+        tr.setUserid(cursor.getString(cursor.getColumnIndex(DBtables.TextReport.COLUMN_NUSER_ID)));
+        tr.setReport(cursor.getString(cursor.getColumnIndex(DBtables.TextReport.COLUMN_REPORT)));
+        tr.setDatetime(cursor.getLong(cursor.getColumnIndex(DBtables.TextReport.COLUMN_DATETIME)));
+        tr.setLongitude(cursor.getDouble(cursor.getColumnIndex(DBtables.TextReport.COLUMN_LONGITUDE)));
+        tr.setLatitude(cursor.getDouble(cursor.getColumnIndex(DBtables.TextReport.COLUMN_LATITUDE)));
+        // here we convert int to boolean
+        tr.setIsreported(cursor.getInt(cursor.getColumnIndex(DBtables.TextReport.COLUMN_ISREPOETED)) > 0);
+        return tr;
+    }
 }

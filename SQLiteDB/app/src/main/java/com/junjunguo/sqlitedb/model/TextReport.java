@@ -1,5 +1,6 @@
 package com.junjunguo.sqlitedb.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -7,13 +8,31 @@ import java.util.Calendar;
  * <p/>
  * Created by GuoJunjun <junjunguo.com> on 06/03/15.
  * <p/>
- * Responsible for this file: GuoJunjun
  */
 public class TextReport {
     private String userid, report;
     private boolean isreported;
     private Calendar datetime;
     private double latitude, longitude;
+
+    /**
+     * current data time will be generated when insert to database; isreported by default is set to false
+     *
+     * @param userid
+     * @param report
+     * @param latitude
+     * @param longitude
+     */
+    public TextReport(String userid, String report, double latitude, double longitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.userid = userid;
+        this.report = report;
+        this.isreported = false;
+    }
+
+    public TextReport() {
+    }
 
     /**
      * Sets new report.
@@ -28,6 +47,19 @@ public class TextReport {
      * @param datetime New value of datetime.
      */
     public void setDatetime(Calendar datetime) { this.datetime = datetime; }
+
+
+    /**
+     * Sets new datetime.
+     *
+     * @param datetime New value of datetime.
+     */
+    public void setDatetime(long datetime) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(datetime);
+
+        this.datetime = cal;
+    }
 
     /**
      * Gets userid.
@@ -98,4 +130,15 @@ public class TextReport {
      * @param isreported New value of isreported.
      */
     public void setIsreported(boolean isreported) { this.isreported = isreported; }
+
+    @Override public String toString() {
+        return "userid='" + userid +
+                ",      isreported=" + isreported +
+                "\nreport='" + report +
+                "\ndatetime=" + df.format(datetime.getTime()) +
+                "\nlatitude=" + latitude +
+                ", longitude=" + longitude;
+    }
+
+    public SimpleDateFormat df = new SimpleDateFormat("EEEE, MMMM d, yyyy 'at' h:mm a");
 }
