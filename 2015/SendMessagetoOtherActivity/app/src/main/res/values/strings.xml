@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Send message to other Activity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_second">SecondActivity</string>
+    <string name="write_message">write a message</string>
+    <string name="send_button">Send</string>
+    <string name="next_screen">Next screen</string>
+</resources>
