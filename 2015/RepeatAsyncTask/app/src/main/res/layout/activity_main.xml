@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                tools:context=".MainActivity">
+
+    <TextView
+        android:text="@string/hello_world"
+        android:id="@+id/text_view"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:padding="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_below="@+id/text_view"
+        android:gravity="center"
+        android:id="@+id/edit_text"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/executor_stop_btn"
+        android:layout_below="@+id/edit_text"
+        android:layout_marginTop="30dp"
+        android:width="200dp"
+        android:text="stop Executor"
+        android:onClick="stopExecutorClicked"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/asyntask_stop_btn"
+        android:layout_below="@+id/executor_stop_btn"
+        android:layout_marginTop="30dp"
+        android:width="200dp"
+        android:text="stop Asyntask"
+        android:onClick="stopAsyntaskClicked"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>
