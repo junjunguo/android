@@ -1,0 +1,101 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:paddingLeft="@dimen/activity_horizontal_margin"
+             android:paddingRight="@dimen/activity_horizontal_margin"
+             android:stretchColumns="*"
+             android:paddingTop="@dimen/activity_vertical_margin"
+             android:paddingBottom="@dimen/activity_vertical_margin"
+             tools:context=".MainActivity">
+
+
+    <!--row 1-->
+    <TableRow
+        android:layout_width="fill_parent"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:layout_span="1"
+            android:background="@color/blue1"
+            android:height="100dp"
+            android:gravity="center"
+            android:text="row 1 \n column 1"
+            />
+
+        <Button
+            android:layout_span="1"
+            android:layout_width="match_parent"
+            android:background="@color/blue2"
+            android:height="100dp"
+            android:gravity="center"
+            android:text="row 1 \n column 2"
+            />
+
+        <Button
+            android:layout_span="1"
+            android:layout_width="match_parent"
+            android:background="@color/blue3"
+            android:height="100dp"
+            android:gravity="center"
+            android:text="row 1 \n column 3"
+            />
+    </TableRow>
+    <!--row 2-->
+    <TableRow
+        android:gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        >
+
+        <Button
+            android:layout_span="3"
+            android:background="@color/blue4"
+            android:height="100dp"
+            android:text="row 2 \n column 1"
+            />
+    </TableRow>
+    <!-- row 3-->
+    <TableRow
+        android:gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        >
+
+        <Button
+            android:layout_span="1"
+            android:background="@color/blue5"
+            android:height="100dp"
+
+            android:text="row 3 \n column 1"
+            />
+
+        <Button
+            android:layout_span="2"
+            android:height="100dp"
+            android:background="@color/blue6"
+            android:text="row 3 \n column 2"/>
+
+    </TableRow>
+
+    <!-- row 4-->
+    <TableRow
+        android:gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        >
+
+        <Button
+            android:layout_span="2"
+            android:background="@color/blue4"
+            android:height="100dp"
+
+            android:text="row 4 \n column 1"
+            />
+
+        <Button
+            android:layout_span="1"
+            android:height="100dp"
+            android:background="@color/blue3"
+            android:text="row 4 \n column 2"/>
+
+    </TableRow>
+
+</TableLayout>

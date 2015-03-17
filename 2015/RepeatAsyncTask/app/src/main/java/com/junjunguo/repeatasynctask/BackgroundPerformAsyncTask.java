@@ -23,6 +23,7 @@ public class BackgroundPerformAsyncTask extends AsyncTask {
         //run tasks her ...
         if (isOnline()) {
             Log.i("Async", "-------> Text from BackgroundPerformAsyncTask");
+
         }
         return null;
     }
