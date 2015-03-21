@@ -1,4 +1,4 @@
-package com.junjunguo.alertdialogbuilder;
+package com.junjunguo.alertdialog;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.junjunguo.alertdialogbuilder.R;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -19,10 +19,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void btnAlertDialogClicked(View v) {
-        // custom dialog
-        Toast.makeText(this, "show alert clicked--------", Toast.LENGTH_SHORT).show();
-
+    public void btnDialogClicked(View v) {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.custom_layout);
         dialog.setTitle("Alert Dialog View");

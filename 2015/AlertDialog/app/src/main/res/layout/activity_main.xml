@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"/>
 
     <Button
-        android:onClick="btnAlertDialogClicked"
+        android:onClick="btnDialogClicked"
         android:id="@+id/btnShowAlert"
         android:background="@color/red2"
         android:textColor="@color/white"
@@ -28,5 +28,5 @@
         android:layout_below="@id/custom_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/show_alert_view"/>
+        android:text="@string/show_dialog_view"/>
 </RelativeLayout>

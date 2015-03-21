@@ -1,9 +1,8 @@
 <resources>
-    <string name="app_name">AlertDialog Builder</string>
-
+    <string name="app_name">Alert Dialog</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="alert_dialog">Alert Dialog</string>
-    <string name="show_alert_view">Show Alert View</string>
+    <string name="show_dialog_view">Show Dialog View</string>
     <string name="exit">Exit</string>
 </resources>
