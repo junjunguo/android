@@ -1,9 +1,10 @@
 package com.junjunguo.sqliteimage;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,10 +15,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class DisplayImage extends ActionBarActivity {
+public class DisplayImage extends Activity {
     private MyImage image;
     private ImageView imageView;
     private TextView description;
+    private String jstring;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +30,17 @@ public class DisplayImage extends ActionBarActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            image = getMyImage(extras.getString("IMAGE"));
-            description.setText(image.toString());
-            imageView.setImageBitmap(BitmapFactory.decodeFile(image.getPath()));
+            jstring = extras.getString("IMAGE");
         }
+        image = getMyImage(jstring);
+        description.setText(image.toString());
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        imageView.setImageBitmap(ImageResizer
+                .decodeSampledBitmapFromFile(image.getPath(), width, height));
     }
 
     private MyImage getMyImage(String image) {
@@ -67,6 +76,25 @@ public class DisplayImage extends ActionBarActivity {
         db.close();
         startActivity(new Intent(this, MainActivity.class));
         finish();
+    }
+
+    @Override protected void onSaveInstanceState(Bundle outState) {
+        // Save the user's current game state
+        if (jstring != null) {
+            outState.putString("jstring", jstring);
+        }
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Restore state members from saved instance
+        if (savedInstanceState.containsKey("jstring")) {
+            jstring = savedInstanceState.getString("jstring");
+        }
     }
 
 

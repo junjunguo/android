@@ -5,20 +5,21 @@
                 android:orientation="vertical"
                 tools:context="com.junjunguo.sqliteimage.DisplayImage">
 
-    <TextView
-        android:id="@+id/text_view_description"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/deepPurple2"
-        android:background="@color/deepPurple5"/>
-
     <ImageView
         android:id="@+id/display_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_gravity="center"/>
+        android:layout_centerInParent="true"
+        android:padding="5dp"/>
 
+    <TextView
+        android:id="@+id/text_view_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="#809575CD"/>
 
     <TableRow
         android:id="@+id/table_row"
@@ -33,6 +34,7 @@
             android:layout_height="50dp"
             android:background="@color/deepPurple4"
             android:textColor="@color/white"
+            android:layout_marginRight="1dp"
             android:id="@+id/btnDelete"
             android:text="Delete"/>
 
@@ -42,6 +44,7 @@
             android:layout_height="50dp"
             android:background="@color/deepPurple4"
             android:textColor="@color/white"
+            android:layout_marginLeft="1dp"
             android:id="@+id/btnBack"
             android:text="Back"/>
     </TableRow>
