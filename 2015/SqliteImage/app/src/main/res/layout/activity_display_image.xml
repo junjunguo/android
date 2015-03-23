@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context="com.junjunguo.sqliteimage.DisplayImage">
+
+    <TextView
+        android:id="@+id/text_view_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/deepPurple2"
+        android:background="@color/deepPurple5"/>
+
+    <ImageView
+        android:id="@+id/display_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_gravity="center"/>
+
+
+    <TableRow
+        android:id="@+id/table_row"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:weightSum="2"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:onClick="btnDeleteOnClick"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:background="@color/deepPurple4"
+            android:textColor="@color/white"
+            android:id="@+id/btnDelete"
+            android:text="Delete"/>
+
+        <Button
+            android:onClick="btnBackOnClick"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:background="@color/deepPurple4"
+            android:textColor="@color/white"
+            android:id="@+id/btnBack"
+            android:text="Back"/>
+    </TableRow>
+</RelativeLayout>

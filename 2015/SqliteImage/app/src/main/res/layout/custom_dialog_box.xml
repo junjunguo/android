@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:background="@color/deepPurple5"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:layout_height="fill_parent">
+
+    <Button
+        android:onClick="btnChoosePathClicked"
+        android:id="@+id/btnChoosePath"
+        android:background="@color/deepPurple1"
+        android:textColor="@color/deepPurple5"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:width="200dp"
+        android:text="From Gallery"/>
+
+    <Button
+        android:onClick="btnTakePhotoClicked"
+        android:id="@+id/btnTakePhoto"
+        android:background="@color/deepPurple2"
+        android:textColor="@color/deepPurple5"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnChoosePath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:width="200dp"
+        android:text="Take Photo"/>
+
+    <Button
+        android:onClick="btnExitClicked"
+        android:id="@+id/btnExit"
+        android:background="@color/deepPurple4"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnTakePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="200dp"
+        android:text="Exit"/>
+</RelativeLayout>
