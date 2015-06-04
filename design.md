@@ -14,6 +14,14 @@ Responsive design
 --
 Responsive web design (RWD) is an approach to web design aimed at crafting sites to provide an optimal viewing experience—easy reading and navigation with a minimum of resizing, panning, and scrolling—across a wide range of devices (from desktop computer monitors to mobile phones)
 
+
+[Software Architecture](https://github.com/junjunguo/softwareArchitecture/blob/master/architecture.md)
+--
+[Design Principles](https://github.com/junjunguo/HumanComputerInteraction/blob/master/designPriciples.md)
+--
+[GUI Components](https://github.com/junjunguo/HumanComputerInteraction/blob/master/guiComponents.md)
+--
+
 android style color
 --
 [Style Color](http://www.google.com/design/spec/style/color.html#)
