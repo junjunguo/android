@@ -2,6 +2,7 @@ package com.junjunguo.systembarcolor;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
@@ -27,6 +28,8 @@ public class MainActivity extends Activity {
         // enable navigation bar tint
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setStatusBarTintResource(R.color.statusbar_bg);
+
+        tintManager.setNavigationBarTintColor(Color.parseColor("#99ffffff"));
 
     }
 
