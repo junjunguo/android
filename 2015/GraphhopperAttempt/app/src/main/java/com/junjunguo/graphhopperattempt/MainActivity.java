@@ -88,6 +88,7 @@ public class MainActivity extends Activity
     private Location mCurrentLocation;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
+    private Marker mPositionMarker;
 
     /**
      * initial current location variables
@@ -115,20 +116,28 @@ public class MainActivity extends Activity
             logUser("my last location: " + mLastLocation.toString());
         } else {
             mCurrentLocation = new Location("default");
-            mCurrentLocation.setLatitude(63.4305939);
-            mCurrentLocation.setLongitude(10.3921571);
+            mCurrentLocation.setLatitude(52.537205);
+            mCurrentLocation.setLongitude(13.394924);
             logUser("Could not find any locations stored on device");
         }
-        //        if (startMarker == null) {
-        //            startMarker = new Marker(mMapView);
-        //        }
-        //
-        //        //        Reporting.reportMyLocation(mCurrentLocation);
-        //        newReportLocation = new Location(mCurrentLocation);
-        //        onLocationChanged(mCurrentLocation);
+        if (mPositionMarker == null) {
+            mPositionMarker = createMarker(new LatLong(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()),
+                    R.drawable.my_position);
+        }
+
+        //        Reporting.reportMyLocation(mCurrentLocation);
+        onLocationChanged(mCurrentLocation);
 
     }
 
+    /**
+     * Updates the current user's location marker to reflect a change in position
+     *
+     * @param location the new location
+     */
+    private void updateMyPositionMarker(Location location) {
+
+    }
 
     protected boolean onMapTap(LatLong tapLatLong, Point layerXY, Point tapXY) {
         if (!isReady()) return false;
@@ -336,7 +345,7 @@ public class MainActivity extends Activity
      * @param location The new location, as a Location object.
      */
     @Override public void onLocationChanged(Location location) {
-
+        updateMyPositionMarker(location);
     }
 
     /**

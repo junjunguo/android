@@ -22,7 +22,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'com.google.android.gms:play-services:7.5.0'
+//    compile 'com.google.android.gms:play-services:7.5.0'
+    compile 'com.google.android.gms:play-services-location:7.5.0'
+
 
     compile(group: 'com.graphhopper', name: 'graphhopper', version: '0.4.1') {
         exclude group: 'com.google.protobuf', module: 'protobuf-java'
