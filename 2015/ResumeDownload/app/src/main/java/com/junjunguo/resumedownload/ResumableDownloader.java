@@ -1,7 +1,5 @@
 package com.junjunguo.resumedownload;
 
-import android.util.Log;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -56,23 +54,22 @@ public class ResumableDownloader {
      * @throws IOException
      */
     public void downloadFile(String urlStr, String toFile, DownloadListener downloadListener) throws IOException {
-        prepareDownload(urlStr, toFile);
-        HttpURLConnection connection = createConnection(urlStr);
+        prepareDownload(urlStr, toFile, downloadListener);
+        HttpURLConnection connection = createConnection(urlStr, downloadListener);
         setStatus(DOWNLOADING);
         if (!startNewDownload) {connection.setRequestProperty("Range", "bytes=" + downloadedFile.length() + "-");}
-        log("ResponseCode: " + connection.getResponseCode() + "ResponseMessage: " + connection.getResponseMessage() +
-                "file length:" + fileLength);
+        downloadListener.progressUpdate(new Message("ResponseCode: " + connection.getResponseCode() + "; file length:" +
+                fileLength + "\nResponseMessage: " + connection.getResponseMessage()));
         InputStream in = new BufferedInputStream(connection.getInputStream(), BUFFER_SIZE);
         FileOutputStream writer;
         long progressLength = 0;
         if (!startNewDownload) {
             progressLength += downloadedFile.length();
-            log("resume download to: " + toFile);
+            downloadListener.progressUpdate(new Message("resume download to: " + toFile));
             // append to exist downloadedFile
             writer = new FileOutputStream(toFile, true);
         } else {
-            log("new download to: " + toFile);
-
+            downloadListener.progressUpdate(new Message("new download to: " + toFile));
             writer = new FileOutputStream(toFile);
             // save remote last modified data to local
             lastModified = connection.getHeaderField("Last-Modified");
@@ -84,7 +81,7 @@ public class ResumableDownloader {
                 progressLength += count;
                 writer.write(buffer, 0, count);
                 // progress....
-                downloadListener.progressUpdate((int) (progressLength * 100 / fileLength));
+                downloadListener.progressUpdate(new Message((int) (progressLength * 100 / fileLength)));
                 if (progressLength == fileLength) {
                     progressLength = 0;
                     setStatus(COMPLETE);
@@ -94,20 +91,20 @@ public class ResumableDownloader {
             writer.close();
             in.close();
             connection.disconnect();
-
         }
     }
 
     /**
      * rend a request to server & decide to start a new download or not
      *
-     * @param urlStr string url
-     * @param toFile to file path
+     * @param urlStr           string url
+     * @param toFile           to file path
+     * @param downloadListener
      * @throws IOException
      */
-    private void prepareDownload(String urlStr, String toFile) throws IOException {
-        log("prepare download ...........");
-        HttpURLConnection conn = createConnection(urlStr);
+    private void prepareDownload(String urlStr, String toFile, DownloadListener downloadListener) throws IOException {
+        downloadListener.progressUpdate(new Message("prepare download ..........."));
+        HttpURLConnection conn = createConnection(urlStr, downloadListener);
         downloadedFile = new File(toFile);
         String remoteLastModified = conn.getHeaderField("Last-Modified");
         fileLength = conn.getContentLength();
@@ -116,16 +113,18 @@ public class ResumableDownloader {
                 !remoteLastModified.equalsIgnoreCase(lastModified));
 
         conn.disconnect();
-        log("prepare finished .... start a new Download = " + startNewDownload);
+        downloadListener
+                .progressUpdate(new Message("prepare finished .... start a new Download = " + startNewDownload));
     }
 
     /**
-     * @param urlStr url string
+     * @param urlStr           url string
+     * @param downloadListener
      * @return An URLConnection for HTTP
      * @throws IOException
      */
-    private HttpURLConnection createConnection(String urlStr) throws IOException {
-        log("create new connection ....");
+    private HttpURLConnection createConnection(String urlStr, DownloadListener downloadListener) throws IOException {
+        downloadListener.progressUpdate(new Message("create new connection ...."));
         URL url = new URL(urlStr);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection(); // Open connection to URL.
         conn.setDoInput(true);
@@ -157,7 +156,4 @@ public class ResumableDownloader {
         return lastModified;
     }
 
-    public void log(String s) {
-        Log.i(this.getClass().getSimpleName(), "----" + s);
-    }
 }

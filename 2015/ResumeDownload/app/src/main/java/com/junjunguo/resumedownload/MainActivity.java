@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class MainActivity extends Activity {
-    private TextView percentage, message;
+    private TextView percentageTV, messageTV;
     private ProgressBar progressBar;
     private EditText url;
     private Button start, pause;
@@ -50,12 +50,12 @@ public class MainActivity extends Activity {
         mDownloader = new ResumableDownloader(settings.getString(PREFS_KEY_LASTMODIFIED, ""), mDownloader.PAUSE);
         int progress = settings.getInt(PREFS_KEY_PROGRESS, 0);
         progressBar.setProgress(progress);
-        percentage.setText(String.format("%1$" + 3 + "s", progress) + "%");
+        percentageTV.setText(String.format("%1$" + 3 + "s", progress) + "%");
     }
 
     private void initView() {
-        percentage = (TextView) findViewById(R.id.progress_percentage);
-        message = (TextView) findViewById(R.id.message);
+        percentageTV = (TextView) findViewById(R.id.progress_percentage);
+        messageTV = (TextView) findViewById(R.id.message);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         url = (EditText) findViewById(R.id.download_url);
         start = (Button) findViewById(R.id.start);
@@ -68,22 +68,22 @@ public class MainActivity extends Activity {
         url.setText(urlStr);
         start.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                message.setText("status: " + mDownloader.getStatusStr());
                 if (asytaskFinished && mDownloader.getStatus() != mDownloader.DOWNLOADING) {
                     initUrl();
                     startDownload();
                 }
+                message("status: " + mDownloader.getStatusStr());
             }
         });
 
         pause.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                message.setText("is cancelled: " + asyncTask.isCancelled());
                 if (mDownloader.getStatus() == mDownloader.DOWNLOADING) {
                     mDownloader.setStatus(mDownloader.PAUSE);
                     asyncTask.cancel(true);
-                    message.setText("paused & asyncTask is cancelled: " + asyncTask.isCancelled());
+                    message("paused & asyncTask is cancelled - " + asyncTask.isCancelled());
                 }
+                message("status: " + mDownloader.getStatusStr());
             }
         });
     }
@@ -93,49 +93,68 @@ public class MainActivity extends Activity {
         String file = urlStr.substring(urlStr.lastIndexOf("/") + 1);
         fileExtension = file.substring(file.lastIndexOf("."));
         filename = file.substring(0, file.lastIndexOf("."));
-        message.setText("file extension: " + fileExtension + "; file name: " + filename);
+        message("file extension: " + fileExtension + "; file name: " + filename);
     }
 
     private void startDownload() {
         asytaskFinished = false;
-        asyncTask = new AsyncTask<URL, Integer, ResumableDownloader>() {
+        asyncTask = new AsyncTask<URL, Message, ResumableDownloader>() {
+
             protected ResumableDownloader doInBackground(URL... params) {
                 try {
                     if (!fileDir.exists()) { fileDir.mkdirs();}
                     mDownloader.downloadFile(urlStr,
                             (new File(fileDir.getAbsolutePath(), filename + fileExtension)).getAbsolutePath(),
                             new DownloadListener() {
-                                public void progressUpdate(Integer value) {
+                                public void progressUpdate(Message value) {
                                     publishProgress(value);
                                 }
                             });
                 } catch (FileNotFoundException e) {
-                    log("File not found !");
+                    message("File not found !");
                 } catch (IOException e) {
                     e.printStackTrace();
                     mDownloader.setStatus(mDownloader.ERROR);
+                    message(e.getMessage().substring(0, 50));
                 }
                 return mDownloader;
             }
 
-            protected void onProgressUpdate(Integer... values) {
+            protected void onProgressUpdate(Message... values) {
                 super.onProgressUpdate(values);
-                percentage.setText(String.format("%1$" + 3 + "s", values[0]) + "%");
-                progressBar.setProgress(values[0]);
+                int progress = (values[0]).getProgress();
+                if (progress != 0) {
+                    percentageTV.setText(String.format("%1$" + 3 + "s", progress) + "%");
+                    progressBar.setProgress(values[0].getProgress());
+                }
+                String msg = values[0].getMessage();
+                if (msg != "") {
+                    message(msg);
+                }
             }
 
             protected void onPostExecute(ResumableDownloader o) {
                 super.onPostExecute(o);
-                message.setText("Async task finished.");
+                message("Async task finished.");
                 asytaskFinished = true;
             }
 
             protected void onCancelled() {
                 super.onCancelled();
-                message.setText("async Task is cancelled: " + asyncTask.isCancelled());
+                message("async Task is cancelled: " + asyncTask.isCancelled());
                 asytaskFinished = true;
             }
         }.execute();
+    }
+
+    private String msg;
+
+    public void message(String message) {
+        msg = message + "\n" + msg;
+        while (msg.split("\n").length > 6) {
+            msg = msg.substring(0, msg.lastIndexOf("\n"));
+        }
+        this.messageTV.setText(msg);
     }
 
     protected void onStop() {

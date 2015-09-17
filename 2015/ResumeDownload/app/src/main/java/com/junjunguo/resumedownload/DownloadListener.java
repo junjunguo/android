@@ -11,5 +11,5 @@ public interface DownloadListener {
      *
      * @param value
      */
-    void progressUpdate(Integer value);
+    void progressUpdate(Message value);
 }

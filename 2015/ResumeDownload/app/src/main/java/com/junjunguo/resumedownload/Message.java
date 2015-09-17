@@ -14,8 +14,16 @@ public class Message {
         this.message = message;
     }
 
-    public Message() {
-        new Message(0, "");
+
+    public Message(Integer progress) {
+        this.progress = progress;
+        this.message = "";
+    }
+
+
+    public Message(String message) {
+        this.progress = 0;
+        this.message = message;
     }
 
     public Integer getProgress() {
@@ -32,5 +40,12 @@ public class Message {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String toString() {
+        return "Message{" +
+                "progress=" + progress +
+                ", message='" + message + '\'' +
+                '}';
     }
 }
