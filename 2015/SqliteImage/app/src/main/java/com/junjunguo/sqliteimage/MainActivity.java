@@ -40,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
         listView.setAdapter(imageAdapter);
         addItemClickListener(listView);
         initDB();
+        String imgUrl = getIntent().getExtras().getString("MyCapturedImageURI");
     }
 
     /**

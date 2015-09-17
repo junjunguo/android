@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">image adapter to listview </string>
+    <string name="app_name">image adapter to listview</string>
     <string name="action_settings">Settings</string>
     <string name="add_image">Add Image</string>
     <string name="title_activity_display_image">DisplayImage</string>

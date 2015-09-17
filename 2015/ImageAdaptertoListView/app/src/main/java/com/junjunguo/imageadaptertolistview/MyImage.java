@@ -73,7 +73,9 @@ public class MyImage {
      *
      * @param description New value of description.
      */
-    public void setDescription(String description) { this.description = description; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     /**
      * Sets new path.

@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.junjunguo.mapsforgeattempt"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile project('subproject')
+    compile 'com.google.android:support-v4:r7'
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
+}
+
+
+android {
+
+    defaultConfig {
+        testApplicationId "org.mapsforge.applications.android.samples.test"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+    }
+
+    sourceSets {
+        androidTest {
+            java.srcDirs = ['src/androidTest']
+        }
+    }
+}

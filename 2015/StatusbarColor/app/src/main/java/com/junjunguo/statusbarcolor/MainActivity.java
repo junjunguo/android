@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -20,8 +19,8 @@ public class MainActivity extends ActionBarActivity {
         setStatusBarColor(findViewById(R.id.statusBarBackground),
                 getResources().getColor(android.R.color.holo_blue_light));
 
-        TextView textView = (TextView) findViewById(R.id.text_view);
-        textView.setPadding(1, getActionBarHeight() + getStatusBarHeight() + 20, 1, 1);
+//        TextView textView = (TextView) findViewById(R.id.text_view);
+//        textView.setPadding(1, getActionBarHeight() + getStatusBarHeight() + 20, 1, 1);
     }
 
     public void setStatusBarColor(View statusBar, int color) {

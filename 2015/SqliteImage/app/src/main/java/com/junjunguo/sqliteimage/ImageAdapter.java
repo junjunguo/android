@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 /**
  * A ListView is used to show a vertical list of scrollable items. ArrayAdapter
- * can be used to converts an ArrayList of objects into view items loaded into
+ * is used to converts an ArrayList of objects into view items loaded into
  * the ListView container.
  * <p/>
  * This file is part of SqliteImage

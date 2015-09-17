@@ -15,11 +15,13 @@ public class DBhelper extends SQLiteOpenHelper {
 
     public static final String COMMA_SEP = ",";
     public static final String TEXT_TYPE = " TEXT";
+    public static final String BLOB_TYPE = " BLOB";
     public static final String NUMERIC_TYPE = " NUMERIC";
 
     public static final String TABLE_NAME = "image";
 
     public static final String COLUMN_PATH = "path";
+    public static final String COLUMN_IMG = "img";
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_DATETIME = "datetime";
     public static final String COLUMN_DESCRIPTION = "description";
@@ -28,6 +30,7 @@ public class DBhelper extends SQLiteOpenHelper {
     private static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
             COLUMN_PATH + TEXT_TYPE + COMMA_SEP +
+            COLUMN_IMG + BLOB_TYPE + COMMA_SEP +
             COLUMN_TITLE + TEXT_TYPE + COMMA_SEP +
             COLUMN_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
             COLUMN_DATETIME + NUMERIC_TYPE + COMMA_SEP +

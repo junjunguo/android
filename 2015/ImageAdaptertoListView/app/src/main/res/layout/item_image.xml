@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher"
         android:padding="5dp"
-        android:layout_marginRight="10dp"
-        />
+        android:layout_marginRight="10dp"/>
 
     <TextView
         android:id="@+id/item_img_infor"

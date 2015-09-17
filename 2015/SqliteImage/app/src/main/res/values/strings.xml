@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">SqliteImage</string>
-
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="add_image">Add Image</string>

@@ -1,0 +1,16 @@
+A set of six generalized densities:
+1.	ldpi (low) ~120dpi
+2.	mdpi (medium) ~160dpi
+3.	hdpi (high) ~240dpi
+4.	xhdpi (extra-high) ~320dpi
+5.	xxhdpi (extra-extra-high) ~480dpi
+6.	xxxhdpi (extra-extra-extra-high) ~640dpi
+
+
+
+res/
+    mipmap-mdpi/ic_launcher.png (48x48 pixels)
+    mipmap-hdpi/ic_launcher.png (72x72)
+    mipmap-xhdpi/ic_launcher.png (96x96)
+    mipmap-xxhdpi/ic_launcher.png (144x144)
+    mipmap-xxxhdpi/ic_launcher.png (192x192)

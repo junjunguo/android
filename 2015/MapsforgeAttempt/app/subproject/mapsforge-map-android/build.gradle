@@ -1,0 +1,7 @@
+dependencies {
+  compile project(":mapsforge-map")
+  compile group: 'com.caverock', name: 'androidsvg', version:'1.2.2-beta-1'
+}
+
+
+

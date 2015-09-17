@@ -51,11 +51,9 @@ public class DAOdb {
      * @param image
      */
     public void deleteImage(MyImage image) {
-        String whereClause =
-                DBhelper.COLUMN_TITLE + "=? AND " + DBhelper.COLUMN_DATETIME +
-                        "=?";
-        String[] whereArgs = new String[]{image.getTitle(),
-                String.valueOf(image.getDatetimeLong())};
+        String whereClause = DBhelper.COLUMN_TITLE + "=? AND " + DBhelper.COLUMN_DATETIME +
+                "=?";
+        String[] whereArgs = new String[]{image.getTitle(), String.valueOf(image.getDatetimeLong())};
         database.delete(DBhelper.TABLE_NAME, whereClause, whereArgs);
     }
 
@@ -65,12 +63,11 @@ public class DAOdb {
     public List<MyImage> getImages() {
         List<MyImage> MyImages = new ArrayList<>();
         Cursor cursor =
-                database.query(DBhelper.TABLE_NAME, null, null, null, null,
-                        null, DBhelper.COLUMN_DATETIME + " DESC");
+                database.query(DBhelper.TABLE_NAME, null, null, null, null, null, DBhelper.COLUMN_DATETIME + " DESC");
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            MyImage MyImage = cursorToMyImage(cursor);
-            MyImages.add(MyImage);
+            MyImage myImage = cursorToMyImage(cursor);
+            MyImages.add(myImage);
             cursor.moveToNext();
         }
         cursor.close();
@@ -85,14 +82,59 @@ public class DAOdb {
      */
     private MyImage cursorToMyImage(Cursor cursor) {
         MyImage image = new MyImage();
-        image.setPath(
-                cursor.getString(cursor.getColumnIndex(DBhelper.COLUMN_PATH)));
-        image.setTitle(
-                cursor.getString(cursor.getColumnIndex(DBhelper.COLUMN_TITLE)));
-        image.setDatetime(cursor.getLong(
-                cursor.getColumnIndex(DBhelper.COLUMN_DATETIME)));
-        image.setDescription(cursor.getString(
-                cursor.getColumnIndex(DBhelper.COLUMN_DESCRIPTION)));
+        image.setPath(cursor.getString(cursor.getColumnIndex(DBhelper.COLUMN_PATH)));
+        image.setTitle(cursor.getString(cursor.getColumnIndex(DBhelper.COLUMN_TITLE)));
+        image.setDatetime(cursor.getLong(cursor.getColumnIndex(DBhelper.COLUMN_DATETIME)));
+        image.setDescription(cursor.getString(cursor.getColumnIndex(DBhelper.COLUMN_DESCRIPTION)));
+        return image;
+    }
+
+    // save as image  bitmap
+
+    /**
+     *
+     * @param image
+     * @return the row ID of the newly inserted row, or -1 if an error occurred
+     */
+    public long addImage(LoImage image) {
+        ContentValues cv = new ContentValues();
+        cv.put(DBhelper.COLUMN_IMG, image.getByteArray());
+        cv.put(DBhelper.COLUMN_TITLE, image.getTitle());
+        cv.put(DBhelper.COLUMN_DESCRIPTION, image.getDescription());
+        cv.put(DBhelper.COLUMN_DATETIME, System.currentTimeMillis());
+        return database.insert(DBhelper.TABLE_NAME, null, cv);
+    }
+
+
+    /**
+     * @return all bitmap images as a List
+     */
+    public List<LoImage> getBitmapImages() {
+        List<LoImage> loImages = new ArrayList<>();
+        Cursor cursor =
+                database.query(DBhelper.TABLE_NAME, null, null, null, null, null, DBhelper.COLUMN_DATETIME + " DESC");
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            LoImage loImage = cursorToLoImage(cursor);
+            loImages.add(loImage);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return loImages;
+    }
+
+    /**
+     * read the cursor row and convert the row to a LoImage object (image is saved as bitmap)
+     *
+     * @param cursor
+     * @return LoImage object
+     */
+    private LoImage cursorToLoImage(Cursor cursor) {
+        LoImage image = new LoImage();
+        image.setImg(cursor.getBlob(cursor.getColumnIndex(DBhelper.COLUMN_IMG)));
+        image.setTitle(cursor.getString(cursor.getColumnIndex(DBhelper.COLUMN_TITLE)));
+        image.setDatetime(cursor.getLong(cursor.getColumnIndex(DBhelper.COLUMN_DATETIME)));
+        image.setDescription(cursor.getString(cursor.getColumnIndex(DBhelper.COLUMN_DESCRIPTION)));
         return image;
     }
 }

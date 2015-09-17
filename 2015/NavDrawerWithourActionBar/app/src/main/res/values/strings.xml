@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NavDrawer</string>
+    <string name="hello_world">Hello world!</string>
+    <string-array name="colors_array">
+        <item>Black</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Pink</item>
+    </string-array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_websearch">Web search</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
+    <array name="colors">
+        <item>@color/Black</item>
+        <item>@color/Red</item>
+        <item>@color/Green</item>
+        <item>@color/Blue</item>
+        <item>@color/Pink</item>
+    </array>
+    <array name="color_picture">
+        <item>@drawable/black</item>
+        <item>@drawable/red</item>
+        <item>@drawable/green</item>
+        <item>@drawable/blue</item>
+        <item>@drawable/pink</item>
+    </array>
+</resources>

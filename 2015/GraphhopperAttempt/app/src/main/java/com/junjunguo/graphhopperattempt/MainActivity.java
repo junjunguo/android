@@ -76,7 +76,7 @@ public class MainActivity extends Activity
     private Button remoteButton;
     private volatile boolean prepareInProgress = false;
     private volatile boolean shortestPathRunning = false;
-    private String currentArea = "berlin";
+    private String currentArea = "norway";
     private String fileListURL = "https://graphhopper.com/public/maps/0.4/";
     private String prefixURL = fileListURL;
     private String downloadURL;
@@ -481,7 +481,7 @@ public class MainActivity extends Activity
             protected Path saveDoInBackground(Void... v) throws Exception {
                 GraphHopper tmpHopp = new GraphHopper().forMobile();
                 tmpHopp.load(new File(mapsFolder, currentArea).getAbsolutePath());
-                log("found graph " + tmpHopp.getGraph().toString() + ", nodes:" + tmpHopp.getGraph().getNodes());
+                logUser("found graph " + tmpHopp.getGraph().toString() + ", nodes:" + tmpHopp.getGraph().getNodes());
                 hopper = tmpHopp;
                 return null;
             }

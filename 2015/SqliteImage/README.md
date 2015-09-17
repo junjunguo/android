@@ -1,5 +1,4 @@
-Choose Image from Gallery or Camera, display in a ListView and save 
-information in SQLite
+Choose Image from Gallery or Camera, display in a ListView and save information in SQLite
 --
 
 Main view when start
