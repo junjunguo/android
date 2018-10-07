@@ -18,14 +18,11 @@ public class MyListView extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
 
-        String[] mylist = new String[]{"CNY - Yuan Renminbi - China - Beijing", "USD - US Dollar - USA - Washington",
-                "EUR - Euro - European-Union", "GBP - Pound Sterling - United-Kingdom - London",
-                "INR - Indian Rupee - India - New Delhi", "AUD - Australian Dollar - Australia - Canberra",
-                "CAD - Canadian Dollar - Canada - Ottawa", "SGD - Singapore Dollar - Singapore - Singapore",
-                "CHF - Swiss Franc - Switzerland - Bern", "MYR - Malaysian Ringgit - Malaysia - Kuala Lumpur",
-                "JPY - Japanese Yen - Japan - Tokyo", "NZD - New Zealand Dollar - New Zealand - Wellington",
-                "HKD - Hong Kong Dollar - Hong Kong - Victoria", "SEK - Swedish Krona - Sweden - Stockholm",
-                "NOK - Norwegian Krone - Norway - Oslo", "DKK - Danish Krone - Denmark - Copenhagen"};
+        //finding resources refrence
+        Resources resource=getResources();
+        
+        String mylist[]=resource.getStringArray(R.array.mylist);
+       
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mylist);
 
