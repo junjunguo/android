@@ -4,5 +4,27 @@
     <string name="app_name">AndroidListView</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    
+    
+    <string-array name="mylist">
+        <item>CNY - Yuan Renminbi - China - Beijing</item>
+        <item>USD - US Dollar - USA - Washington</item>
+        <item>EUR - Euro - European-Union</item>
+        <item>GBP - Pound Sterling - United-Kingdom - London</item>
+        <item>INR - Indian Rupee - India - New Delhi</item>
+        <item>AUD - Australian Dollar - Australia - Canberra</item>
+        <item>CAD - Canadian Dollar - Canada - Ottawa</item>
+        <item>SGD - Singapore Dollar - Singapore - Singapore</item>
+        <item>CHF - Swiss Franc - Switzerland - Bern</item>
+        <item>MYR - Malaysian Ringgit - Malaysia - Kuala Lumpur</item>
+        <item>JPY - Japanese Yen - Japan - Tokyo</item>
+        <item>NZD - New Zealand Dollar - New Zealand - Wellington</item>
+        <item>HKD - Hong Kong Dollar - Hong Kong - Victoria</item>
+        <item>SEK - Swedish Krona - Sweden - Stockholm</item>
+        <item>NOK - Norwegian Krone - Norway - Oslo</item>
+        <item>DKK - Danish Krone - Denmark - Copenhagen</item>
+      </string-array>
+            
+        
 
 </resources>
